@@ -1,6 +1,7 @@
 FROM debian:stretch
 
-RUN apt-get update -y && apt-get install -y --no-install-recommends \
+RUN apt-get update -yqq \
+  && apt-get install -yqq --no-install-recommends \
     software-properties-common \
     build-essential \
     libffi-dev \
@@ -9,9 +10,9 @@ RUN apt-get update -y && apt-get install -y --no-install-recommends \
     python-pip \
     git \
     systemd \
- && rm -rf /var/lib/apt/lists/*
-
-RUN pip install --upgrade setuptools && pip install ansible
+  && pip install --upgrade setuptools \
+  && pip install ansible \
+  && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /etc/ansible && echo "[local]\nlocalhost ansible_connection=local" > /etc/ansible/hosts
 
